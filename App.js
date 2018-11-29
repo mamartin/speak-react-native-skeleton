@@ -10,7 +10,7 @@ import { createLogger } from "redux-logger"
 import { reducer as moviesReducer } from "./src/redux/MoviesRedux"
 
 // containers
-import RootContainer from "./src/containers/RootContainer"
+import Navigator from "./src/containers/Navigator"
 
 const logger = createLogger({ collapsed: true })
 const middleware = []
@@ -28,7 +28,7 @@ export default class App extends React.PureComponent<null> {
   render() {
     return (
       <Provider store={store}>
-        <RootContainer />
+        <Navigator />
       </Provider>
     )
   }

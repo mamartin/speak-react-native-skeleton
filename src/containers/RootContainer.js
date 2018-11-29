@@ -23,9 +23,17 @@ const styles = StyleSheet.create({
 type Props = {
   movies: Array<*>,
   onGetMovies: typeof onGetMovies,
+  navigation: any,
 }
 
 class RootContainer extends React.PureComponent<Props> {
+  static navigationOptions = { title: "Home" }
+
+  navigate = movieId => {
+    const { navigation } = this.props
+    navigation.navigate("Detail", { movieId })
+  }
+
   render() {
     const { movies, onGetMovies } = this.props
     return (
@@ -35,6 +43,9 @@ class RootContainer extends React.PureComponent<Props> {
           data={movies}
           keyExtractor={item => item.id.toString()}
         />
+        <RoundedButton onPress={() => this.navigate(1)}>
+          Navigate to detail
+        </RoundedButton>
         <RoundedButton onPress={() => onGetMovies(moviesData)}>
           Download movies
         </RoundedButton>
