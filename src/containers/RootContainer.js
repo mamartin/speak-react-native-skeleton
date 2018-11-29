@@ -1,13 +1,13 @@
 // @flow
 import React from "react"
-import { Text, SafeAreaView, StyleSheet, FlatList } from "react-native"
+import { SafeAreaView, StyleSheet, FlatList } from "react-native"
 import { connect } from "react-redux"
 
 // data
 import moviesData from "../../mock/movies"
 
 // components
-import { RoundedButton } from "../components"
+import { RoundedButton, ListItem } from "../components"
 import { Colors } from "../themes"
 
 // redux
@@ -39,13 +39,15 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
-          renderItem={({ item }) => <Text>{item.title}</Text>}
+          renderItem={({ item }) => (
+            <ListItem onPress={() => this.navigate(item.id)}>
+              {item.title}
+            </ListItem>
+          )}
           data={movies}
           keyExtractor={item => item.id.toString()}
         />
-        <RoundedButton onPress={() => this.navigate(1)}>
-          Navigate to detail
-        </RoundedButton>
+
         <RoundedButton onPress={() => onGetMovies(moviesData)}>
           Download movies
         </RoundedButton>
