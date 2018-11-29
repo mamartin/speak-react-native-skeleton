@@ -1,14 +1,35 @@
 // @flow
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Expo from 'expo'
+import "rxjs"
+
+import React from "react"
+import Expo from "expo"
+import { Provider } from "react-redux"
+import { createStore, applyMiddleware, combineReducers } from "redux"
+import { createLogger } from "redux-logger"
+// redux
+import { reducer as moviesReducer } from "./src/redux/MoviesRedux"
 
 // containers
-import RootContainer from './src/containers/RootContainer'
+import RootContainer from "./src/containers/RootContainer"
+
+const logger = createLogger({ collapsed: true })
+const middleware = []
+const initialState = {}
+
+middleware.push(logger)
+
+const store = createStore(
+  combineReducers({ movies: moviesReducer }),
+  initialState,
+  applyMiddleware(...middleware),
+)
 
 export default class App extends React.PureComponent<null> {
   render() {
-    return <RootContainer />
+    return (
+      <Provider store={store}>
+        <RootContainer />
+      </Provider>
+    )
   }
 }
-  
