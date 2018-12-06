@@ -3,15 +3,12 @@ import React from "react"
 import { SafeAreaView, StyleSheet, FlatList } from "react-native"
 import { connect } from "react-redux"
 
-// data
-import moviesData from "../../mock/movies"
-
 // components
 import { RoundedButton, ListItem } from "../components"
 import { Colors } from "../themes"
 
 // redux
-import { onGetMovies } from "../redux/MoviesRedux"
+import { onMoviesRequest } from "../redux/MoviesRedux"
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +19,7 @@ const styles = StyleSheet.create({
 
 type Props = {
   movies: Array<*>,
-  onGetMovies: typeof onGetMovies,
+  onMoviesRequest: typeof onMoviesRequest,
   navigation: any,
 }
 
@@ -35,7 +32,7 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   render() {
-    const { movies, onGetMovies } = this.props
+    const { movies, onMoviesRequest } = this.props
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
@@ -48,7 +45,7 @@ class RootContainer extends React.PureComponent<Props> {
           keyExtractor={item => item.id.toString()}
         />
 
-        <RoundedButton onPress={() => onGetMovies(moviesData)}>
+        <RoundedButton onPress={() => onMoviesRequest()}>
           Download movies
         </RoundedButton>
       </SafeAreaView>
@@ -58,10 +55,11 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = state => ({
   movies: state.movies.items,
+  loading: state.movies.loading,
 })
 
 const mapDispatchToProps = {
-  onGetMovies,
+  onMoviesRequest,
 }
 
 export default connect(
